@@ -11,7 +11,6 @@
 #    GNU General Public License for more details.
 
 from utils import Monitor,loginit,now,mkdir
-from sbutils import pause
 from collections import namedtuple
 
 flog=loginit('/mnt/ram/log/monitor-iotop.log','w')
