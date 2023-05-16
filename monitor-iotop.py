@@ -19,24 +19,22 @@ def log(msg) :
     print(msg)
 
 interests = ['brave', 'chrome', 'chromium','firefox','vivaldi']
-writes={'brave':0, 'chrome':0, 'chromium':0,'firefox':0,'vivaldi':0}
-Event=namedtuple("Event", "cmd,bytes")
+writes    = {'brave':0, 'chrome':0, 'chromium':0,'firefox':0,'vivaldi':0}
+Event     = namedtuple("Event", "cmd,bytes")
 
 ixwrite=5
 ixcmd=11
 
 def addwrite(process,amount) :
-    print(f'adding {process} {amount}')
     if process not in writes :
         writes[process] = 0
     writes[process] += float(amount)
-    print(f'added {process} {amount}')
 
 def parse(event):
     record=event.split()
     return Event(record[ixcmd], float(record[ixwrite]))
 
-log(f'starting read')    
+log(f'starting read at {now(":")}')    
 monitor = Monitor('sudo iotop -b') 
 while event := monitor.read() :
     #
@@ -54,6 +52,6 @@ while event := monitor.read() :
             log(f'total {record.cmd} : {writes[record.bytes]}')
             log('')
       except Exception as e :
-          log(f'EXCEPTION{e} on {event.split()}')
+          log(f'Exception {e} on {event.split()}')
 log('done')    
 

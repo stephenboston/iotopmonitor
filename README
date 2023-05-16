@@ -1,0 +1,17 @@
+Assumes 
+
+- a Linux session, 
+- the iotop utility 
+- python3
+
+I run this with sudo that does not expect a password. 
+
+     %wheel ALL=(ALL) NOPASSWD: ALL 
+
+It will probably run under sudo but I don't know that.
+
+You'll have to read through it. you will need to change the logfile path. I'd be interested in seeing any other changes you make. And please let me know of any errors you find. 
+
+This is not 'published' code, it is code I'm sharing without any guarantee of correctness or quality.
+
+Use at your own risk.
