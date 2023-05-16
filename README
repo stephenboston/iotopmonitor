@@ -12,6 +12,6 @@ It will probably run under sudo but I don't know that.
 
 You'll have to read through it. you will need to change the logfile path. I'd be interested in seeing any other changes you make. And please let me know of any errors you find. 
 
-This is not 'published' code, it is code I'm sharing without any guarantee of correctness or quality.
+This is not 'published' code, it is code I'm sharing without any guarantee of correctness or quality. I am certainly not a practioner of Best Practices or Pretty Patterns.
 
 Use at your own risk.
