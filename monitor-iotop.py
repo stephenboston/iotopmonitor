@@ -12,6 +12,7 @@
 
 from utils import Monitor,loginit,now,mkdir
 from collections import namedtuple
+from dataclasses import dataclass
 
 flog=loginit('/mnt/ram/log/monitor-iotop.log','w')
 def log(msg) :
@@ -19,11 +20,15 @@ def log(msg) :
     print(msg)
 
 interests = ['brave', 'chrome', 'chromium','firefox','vivaldi']
-writes    = {'brave':0, 'chrome':0, 'chromium':0,'firefox':0,'vivaldi':0}
-Event     = namedtuple("Event", "cmd,bytes")
+writes={'brave':0, 'chrome':0, 'chromium':0,'firefox':0,'vivaldi':0}
 
-ixwrite=5
-ixcmd=11
+@dataclass
+class Event:
+    cmd      : str
+    numbytes : float
+
+ixwrite = 5
+ixcmd   = 11
 
 def addwrite(process,amount) :
     if process not in writes :
@@ -34,7 +39,7 @@ def parse(event):
     record=event.split()
     return Event(record[ixcmd], float(record[ixwrite]))
 
-log(f'starting read at {now(":")}')    
+log(f'starting read')    
 monitor = Monitor('sudo iotop -b') 
 while event := monitor.read() :
     #
@@ -46,12 +51,12 @@ while event := monitor.read() :
     if any(interest in event.lower() for interest in interests):
       try:  
         record=parse(event)
-        if record.bytes > 0.00 :
-            log(f'{now(":")} {record.cmd} wrote {record.bytes}')
-            addwrite(record.cmd, record.bytes)
-            log(f'total {record.cmd} : {writes[record.bytes]}')
+        if record.numbytes > 0.00 :
+            log(f'{now(":")} {record.cmd} wrote {record.numbytes}')
+            addwrite(record.cmd, record.numbytes)
+            log(f'total {record.cmd} : {record.numbytes}')
             log('')
       except Exception as e :
-          log(f'Exception {e} on {event.split()}')
+          log(f'Exception {e} on {event}')
 log('done')    
 
